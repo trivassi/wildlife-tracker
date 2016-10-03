@@ -36,7 +36,47 @@ public class AnimalTest {
     assertTrue(testAnimal.getId() > 0);
   }
 
-  
+  @Test
+  public void all_returnsAllInstancesOfAnimal_true() {
+    Animal testAnimal = new Animal("fox");
+    testAnimal.save();
+    Animal otherAnimal = new Animal("fox");
+    otherAnimal.save();
+    assertEquals(true, Animal.all().get(0).equals(testAnimal));
+    assertEquals(true, Animal.all().get(1).equals(otherAnimal));
+  }
 
+  @Test
+  public void save_insertsAnimalIntoDatabase_Animal() {
+    Animal testAnimal = new Animal("fox");
+    testAnimal.save();
+    assertTrue(Animal.all().get(0).equals(testAnimal));
+  }
+
+
+  @Test
+  public void updateName_updatesAnimalName_true() {
+    Animal testAnimal = new Animal("fox");
+    testAnimal.save();
+    testAnimal.updateName("bear");
+    assertEquals("bear", Animal.findAnimals(testAnimal.getId()).getName());
+  }
+
+  @Test
+  public void find_FindsAnimalInstanceRelatedToId_true() {
+    Animal testAnimal = new Animal("fox");
+    testAnimal.save();
+    assertEquals(testAnimal, Animal.find(testAnimal.getId()));
+  }
+
+  @Test
+  public void detele_deleteFromJoinTable_true() {
+    Animal testAnimal = new Animal("fox");
+    testAnimal.save();
+    testSighting.save();
+    testAnimal.delete();
+    assertEquals(0, testAnimal.getId().size());
+  }
+}
 
 }
