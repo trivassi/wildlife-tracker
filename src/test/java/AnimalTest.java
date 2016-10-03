@@ -70,13 +70,12 @@ public class AnimalTest {
   }
 
   @Test
-  public void detele_deleteFromJoinTable_true() {
+  public void delete_deletesAnimal_true() {
     Animal testAnimal = new Animal("fox");
     testAnimal.save();
-    testSighting.save();
+    int testAnimalId = testAnimal.getId();
     testAnimal.delete();
-    assertEquals(0, testAnimal.getId().size());
+    assertEquals(null, Animal.find(testAnimalId));
   }
-}
 
 }
