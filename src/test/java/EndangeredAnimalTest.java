@@ -60,14 +60,14 @@ public class EndangeredAnimalTest {
   public void save_returnsTrueIfNamesAreTheSame() {
     EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("fox", "healthy", "young");
     testEndangeredAnimal.save();
-    assertTrue(EndangeredAnimal.all().get(0).equals(testEndangeredAnimal));
+    assertTrue(EndangeredAnimal.allEndangeredAnimals().get(0).equals(testEndangeredAnimal));
   }
 
   @Test
   public void save_assignsIdToObject() {
     EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("fox", "healthy", "young");
     testEndangeredAnimal.save();
-    EndangeredAnimal savedEndangeredAnimal = EndangeredAnimal.all().get(0);
+    EndangeredAnimal savedEndangeredAnimal = EndangeredAnimal.allEndangeredAnimals().get(0);
     assertEquals(testEndangeredAnimal.getId(), savedEndangeredAnimal.getId());
   }
 
@@ -77,8 +77,8 @@ public class EndangeredAnimalTest {
     testEndangeredAnimal.save();
     EndangeredAnimal secondEndangeredAnimal = new EndangeredAnimal("fox", "healthy", "young");
     secondEndangeredAnimal.save();
-    assertTrue(EndangeredAnimal.all().get(0).equals(testEndangeredAnimal));
-    assertTrue(EndangeredAnimal.all().get(1).equals(secondEndangeredAnimal));
+    assertTrue(EndangeredAnimal.allEndangeredAnimals().get(0).equals(testEndangeredAnimal));
+    assertTrue(EndangeredAnimal.allEndangeredAnimals().get(1).equals(secondEndangeredAnimal));
   }
 
   @Test
@@ -111,6 +111,15 @@ public class EndangeredAnimalTest {
     EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("fox", "healthy", "young");
     testEndangeredAnimal.save();    testEndangeredAnimal.updateAge("adult");
     assertEquals("adult", EndangeredAnimal.find(testEndangeredAnimal.getId()).getAge());
+  }
+
+  @Test
+  public void delete_deletesEndangeredAnimal_null() {
+    EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("fox", "healthy", "young");
+    testEndangeredAnimal.save();
+    int testEndangeredAnimalId = testEndangeredAnimal.getId();
+    testEndangeredAnimal.delete();
+    assertEquals(null, EndangeredAnimal.find(testEndangeredAnimalId));
   }
 
 }

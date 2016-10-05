@@ -42,20 +42,20 @@ public class AnimalTest {
     testAnimal.save();
     Animal otherAnimal = new Animal("fox");
     otherAnimal.save();
-    assertEquals(true, Animal.all().get(0).equals(testAnimal));
-    assertEquals(true, Animal.all().get(1).equals(otherAnimal));
+    assertEquals(true, Animal.allAnimals().get(0).equals(testAnimal));
+    assertEquals(true, Animal.allAnimals().get(1).equals(otherAnimal));
   }
 
   @Test
   public void save_insertsAnimalIntoDatabase_Animal() {
     Animal testAnimal = new Animal("fox");
     testAnimal.save();
-    assertTrue(Animal.all().get(0).equals(testAnimal));
+    assertTrue(Animal.allAnimals().get(0).equals(testAnimal));
   }
 
 
   @Test
-  public void updateName_updatesAnimalName_true() {
+  public void updateName_updatesAnimalName() {
     Animal testAnimal = new Animal("fox");
     testAnimal.save();
     testAnimal.updateName("bear");
@@ -63,14 +63,14 @@ public class AnimalTest {
   }
 
   @Test
-  public void find_FindsAnimalInstanceRelatedToId_true() {
+  public void find_FindsAnimalInstanceRelatedToId_Id() {
     Animal testAnimal = new Animal("fox");
     testAnimal.save();
     assertEquals(testAnimal, Animal.find(testAnimal.getId()));
   }
 
   @Test
-  public void delete_deletesAnimal_true() {
+  public void delete_deletesAnimal_null() {
     Animal testAnimal = new Animal("fox");
     testAnimal.save();
     int testAnimalId = testAnimal.getId();

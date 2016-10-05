@@ -53,14 +53,6 @@ public class EndangeredAnimal extends Animal {
     }
   }
 
-  public static List<EndangeredAnimal> all() {
-    try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM animals WHERE age IN ('newborn', 'young', 'adult')";
-      return con.createQuery(sql)
-        .executeAndFetch(EndangeredAnimal.class);
-    }
-  }
-
   public static EndangeredAnimal find(int id) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM animals WHERE id = :id AND age IN ('newborn', 'young', 'adult')";
@@ -90,6 +82,14 @@ public class EndangeredAnimal extends Animal {
         .addParameter("age", age)
         .addParameter("id", this.id)
         .executeUpdate();
+    }
+  }
+
+  public static List<EndangeredAnimal> allEndangeredAnimals() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM animals WHERE age IN ('newborn', 'young', 'adult')";
+      return con.createQuery(sql)
+        .executeAndFetch(EndangeredAnimal.class);
     }
   }
 
