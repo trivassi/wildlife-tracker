@@ -10,6 +10,7 @@ import java.util.Arrays;
 public class Sighting{
   private String location;
   private Timestamp date;
+  private String rangerName;
   private int animalId;
   private int id;
 
@@ -17,14 +18,19 @@ public class Sighting{
   public static final String LOCATION_RIVER = "Near The River";
   public static final String LOCATION_NE = "NE Quadrant";
 
-  public Sighting(String location, int animalId) {
+  public Sighting(String location, String rangerName, int animalId) {
     this.location = location;
+    this.rangerName = rangerName;
     this.animalId = animalId;
     this.date = new Timestamp(new Date().getTime());
   }
 
   public String getLocation() {
     return this.location;
+  }
+
+  public String getRangerName() {
+    return this.rangerName;
   }
 
   public int getAnimalId() {
@@ -46,6 +52,7 @@ public class Sighting{
     } else {
       Sighting newSighting = (Sighting) otherSighting;
       return this.getLocation().equals(newSighting.getLocation()) &&
+      this.getRangerName().equals(newSighting.getRangerName()) &&
       this.getDate().equals(newSighting.getDate()) &&
       this.getAnimalId() == newSighting.getAnimalId() &&
       this.getId() == newSighting.getId();
@@ -54,10 +61,11 @@ public class Sighting{
 
   public void save() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO sightings (location, date, animalId) VALUES (:location, :date, :animalId)";
+      String sql = "INSERT INTO sightings (location, date, rangerName, animalId) VALUES (:location, :date, :rangerName, :animalId)";
       this.id = (int) con.createQuery(sql, true)
         .addParameter("location", this.location)
         .addParameter("date", this.date)
+        .addParameter("rangerName", this.rangerName)
         .addParameter("animalId", this.animalId)
         .executeUpdate()
         .getKey();

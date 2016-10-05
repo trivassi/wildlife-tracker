@@ -1,12 +1,12 @@
-# _Dictionary-Java Application_
+# _Wildlife Tracker Application_
 
-#### _Lets users add clients to stylists of the hair salon._
+#### _Lets users add sightings of certain animals to help conserve the wildlife in the forest._
 
 #### By _**Thomas Rivas**_
 
 ## Description
 
-#### _Lets users add clients to stylists of the hair salon. Both are made from user input. The user is also able to edit the information of the stylist or client._
+#### _Lets users add sightings of certain animals to help conserve the wildlife in the forest. Rangers can add sightings of animals they had seen. Also the user can see if the anumal is endangered or not_
 
 
 ## Setup/Installation Requirements
@@ -15,9 +15,9 @@
 * _Open in your text editor of choice_
 
 In PSQL:
-CREATE DATABASE wildlife_tracker;
-CREATE TABLE clients (id serial PRIMARY KEY, name varchar, age int, email varchar, phone varchar, appointment timestamp, stylistid int);
-CREATE TABLE stylists (id serial PRIMARY KEY, name varchar, age int, email varchar, phone varchar);
+1. CREATE DATABASE wildlife_tracker;
+2. CREATE TABLE animals (id serial PRIMARY KEY, name varchar, health varchar, age varchar);
+3. CREATE TABLE sightings (id serial PRIMARY KEY, location varchar, date timestamp, rangername varchar, animalid int);
 
 ## Known Bugs
 
