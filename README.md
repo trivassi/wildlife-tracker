@@ -18,6 +18,7 @@ In PSQL:
 1. CREATE DATABASE wildlife_tracker;
 2. CREATE TABLE animals (id serial PRIMARY KEY, name varchar, health varchar, age varchar);
 3. CREATE TABLE sightings (id serial PRIMARY KEY, location varchar, date timestamp, rangername varchar, animalid int);
+4. CREATE TABLE rangers (id serial PRIMARY KEY, name varchar);
 
 ## Known Bugs
 
