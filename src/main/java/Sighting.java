@@ -39,16 +39,47 @@ public class Sighting{
     return DateFormat.getDateTimeInstance().format(this.date);
   }
 
-  public void save() {
-  try(Connection con = DB.sql2o.open()) {
-    String sql = "INSERT INTO sightings (location, date, animalId) VALUES (:location, :date, :animalId)";
-    this.id = (int) con.createQuery(sql, true)
-      .addParameter("location", this.location)
-      .addParameter("date", this.date)
-      .addParameter("animalId", this.animalId)
-      .executeUpdate()
-      .getKey();
+  @Override
+  public boolean equals(Object otherSighting) {
+    if (!(otherSighting instanceof Sighting)) {
+      return true;
+    } else {
+      Sighting newSighting = (Sighting) otherSighting;
+      return this.getLocation().equals(newSighting.getLocation()) &&
+      this.getDate().equals(newSighting.getDate()) &&
+      this.getAnimalId() == newSighting.getAnimalId() &&
+      this.getId() == newSighting.getId();
+    }
   }
-}
+
+  public void save() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO sightings (location, date, animalId) VALUES (:location, :date, :animalId)";
+      this.id = (int) con.createQuery(sql, true)
+        .addParameter("location", this.location)
+        .addParameter("date", this.date)
+        .addParameter("animalId", this.animalId)
+        .executeUpdate()
+        .getKey();
+    }
+  }
+
+  public static List<Sighting> all() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM sightings";
+      return con.createQuery(sql)
+        .executeAndFetch(Sighting.class);
+    }
+  }
+
+  public static Sighting find(int id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM sightings WHERE id = :id";
+      return con.createQuery(sql)
+        .throwOnMappingFailure(false)
+        .addParameter("id", id)
+        .executeAndFetchFirst(Sighting.class);
+    }
+  }
 
 }
