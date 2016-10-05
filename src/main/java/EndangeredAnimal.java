@@ -6,6 +6,12 @@ public class EndangeredAnimal extends Animal {
   private String health;
   private String age;
 
+  public static final String HEALTH_HEALTHY = "healthy";
+  public static final String HEALTH_OKAY = "okay";
+  public static final String HEALTH_ILL = "ill";
+  public static final String AGE_NEWBORN = "newborn";
+  public static final String AGE_YOUNG = "young";
+  public static final String AGE_ADULT = "adult";
 
   public EndangeredAnimal(String name, String health, String age) {
     super(name);
@@ -47,6 +53,24 @@ public class EndangeredAnimal extends Animal {
     }
   }
 
+  public static List<EndangeredAnimal> all() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM animals WHERE age IN ('newborn', 'young', 'adult')";
+      return con.createQuery(sql)
+        .executeAndFetch(EndangeredAnimal.class);
+    }
+  }
+
+  public static EndangeredAnimal find(int id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM animals WHERE id = :id AND age IN ('newborn', 'young', 'adult')";
+      return con.createQuery(sql)
+        .throwOnMappingFailure(false)
+        .addParameter("id", id)
+        .executeAndFetchFirst(EndangeredAnimal.class);
+    }
+  }
+
   public void updateHealth(String health) {
     this.health = health;
     try(Connection con = DB.sql2o.open()) {
@@ -68,14 +92,5 @@ public class EndangeredAnimal extends Animal {
         .executeUpdate();
     }
   }
-
-  // public static List<EndangeredAnimal> all() {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "SELECT * FROM animals";
-  //     return con.createQuery(sql)
-  //       .executeAndFetch(EndangeredAnimal.class);
-  //   }
-  // }
-
 
 }

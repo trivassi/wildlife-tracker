@@ -1,9 +1,14 @@
-public abstract class Animal {
+import org.sql2o.*;
+import java.util.List;
+import java.util.ArrayList;
+
+public class Animal {
   public int id;
   public String name;
 
+
   public Animal(String name) {
-    this.name = id;
+    this.name = name;
   }
 
   public String getName(){
@@ -21,7 +26,6 @@ public abstract class Animal {
     } else {
       Animal newAnimal = (Animal) otherAnimal;
       return this.getName().equals(newAnimal.getName()) &&
-      this.getDescription().equals(newAnimal.getDescription()) &&
       this.getId() == newAnimal.getId();
     }
   }
@@ -55,16 +59,16 @@ public abstract class Animal {
     }
   }
 
-//???
-  public List<Sighting> getSightings() {
-    try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM sightings WHERE animalid = :id";
-      return con.createQuery(sql)
-        .addParameter("id", this.id)
-        .executeAndFetch(Sighting.class);
-    }
-  }
-// ??
+// //???
+//   public List<Sighting> getSightings() {
+//     try(Connection con = DB.sql2o.open()) {
+//       String sql = "SELECT * FROM sightings WHERE animalid = :id";
+//       return con.createQuery(sql)
+//         .addParameter("id", this.id)
+//         .executeAndFetch(Sighting.class);
+//     }
+//   }
+// // ??
 
 public void updateName(String name) {
   this.name = name;

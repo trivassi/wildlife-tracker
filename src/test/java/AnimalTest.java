@@ -59,7 +59,7 @@ public class AnimalTest {
     Animal testAnimal = new Animal("fox");
     testAnimal.save();
     testAnimal.updateName("bear");
-    assertEquals("bear", Animal.findAnimals(testAnimal.getId()).getName());
+    assertEquals("bear", Animal.find(testAnimal.getId()).getName());
   }
 
   @Test

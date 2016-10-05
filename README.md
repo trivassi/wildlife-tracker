@@ -15,7 +15,7 @@
 * _Open in your text editor of choice_
 
 In PSQL:
-CREATE DATABASE hair_salon;
+CREATE DATABASE wildlife_tracker;
 CREATE TABLE clients (id serial PRIMARY KEY, name varchar, age int, email varchar, phone varchar, appointment timestamp, stylistid int);
 CREATE TABLE stylists (id serial PRIMARY KEY, name varchar, age int, email varchar, phone varchar);
 
