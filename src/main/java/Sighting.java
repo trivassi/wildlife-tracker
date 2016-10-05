@@ -17,7 +17,7 @@ public class Sighting{
   public static final String LOCATION_RIVER = "Near The River";
   public static final String LOCATION_NE = "NE Quadrant";
 
-  public Sighting(String location, String animalId) {
+  public Sighting(String location, int animalId) {
     this.location = location;
     this.animalId = animalId;
     this.date = new Timestamp(new Date().getTime());
@@ -82,4 +82,12 @@ public class Sighting{
     }
   }
 
+  public void delete() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "DELETE FROM sightings WHERE id = :id";
+      con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeUpdate();
+    }
+  }
 }

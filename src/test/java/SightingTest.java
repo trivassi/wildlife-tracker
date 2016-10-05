@@ -38,8 +38,35 @@ public class SightingTest {
     assertEquals(DateFormat.getDateTimeInstance().format(rightNow), testSighting.getDate());
   }
 
+  @Test
+  public void save_returnsTrueIfLocationsAreTheSame() {
+    Sighting testSighting = new Sighting(Sighting.LOCATION_ZONEA, 1);
+    testSighting.save();    assertTrue(Sighting.all().get(0).equals(testSighting));
+  }
 
+  @Test
+  public void save_assignsIdToObject() {
+    Sighting testSighting = new Sighting(Sighting.LOCATION_ZONEA, 1);
+    testSighting.save();
+    Sighting savedSighting = Sighting.all().get(0);
+    assertEquals(testSighting.getId(), savedSighting.getId());
+  }
 
+  @Test
+  public void find_returnsSightingWithSameId() {
+    Sighting testSighting = new Sighting(Sighting.LOCATION_ZONEA, 1);
+    testSighting.save();
+    Sighting secondSighting = new Sighting(Sighting.LOCATION_ZONEA, 1);
+    secondSighting.save();    assertEquals(Sighting.find(secondSighting.getId()), secondSighting);
+  }
 
+  @Test
+  public void delete_deleteSighting() {
+    Sighting testSighting = new Sighting(Sighting.LOCATION_ZONEA, 1);
+    testSighting.save();
+    int testSightingId = testSighting.getId();
+    testSighting.delete();
+    assertEquals(null, Sighting.find(testSightingId));
+  }
 
 }
