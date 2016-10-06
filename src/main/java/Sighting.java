@@ -87,6 +87,8 @@ public class Sighting{
         .throwOnMappingFailure(false)
         .addParameter("id", id)
         .executeAndFetchFirst(Sighting.class);
+    } catch (IndexOutOfBoundsException exception) {
+      return null;
     }
   }
 

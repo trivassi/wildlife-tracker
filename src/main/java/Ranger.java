@@ -29,8 +29,6 @@ public class Ranger {
     } else {
       Ranger newRanger = (Ranger) otherRanger;
       return this.getName().equals(newRanger.getName()) &&
-      this.getPassword().equals(newRanger.getPassword()) &&
-      this.getContactInfo().equals(newRanger.getContactInfo()) &&
       this.getId() == newRanger.getId();
     }
   }
@@ -68,15 +66,8 @@ public class Ranger {
       return con.createQuery(sql)
         .addParameter("id", id)
         .executeAndFetchFirst(Ranger.class);
-    }
-  }
-
-  public List<Sighting> getSightings() {
-    try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM sightings WHERE rangerid = :id";
-      return con.createQuery(sql)
-        .addParameter("id", this.id)
-        .executeAndFetch(Sighting.class);
+    } catch (IndexOutOfBoundsException exception) {
+      return null;
     }
   }
 
@@ -86,6 +77,15 @@ public class Ranger {
       con.createQuery(sql)
         .addParameter("id", this.id)
         .executeUpdate();
+    }
+  }
+
+  public List<Sighting> getSightings() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM sightings WHERE rangerid = :id";
+      return con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeAndFetch(Sighting.class);
     }
   }
 

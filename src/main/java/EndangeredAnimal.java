@@ -60,6 +60,8 @@ public class EndangeredAnimal extends Animal {
         .throwOnMappingFailure(false)
         .addParameter("id", id)
         .executeAndFetchFirst(EndangeredAnimal.class);
+    } catch (IndexOutOfBoundsException exception) {
+    return null;
     }
   }
 

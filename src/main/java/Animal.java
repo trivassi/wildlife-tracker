@@ -56,19 +56,19 @@ public class Animal {
         .throwOnMappingFailure(false)
         .addParameter("id", id)
         .executeAndFetchFirst(Animal.class);
+    } catch (IndexOutOfBoundsException exception) {
+      return null;
     }
   }
 
-// //???
-//   public List<Sighting> getSightings() {
-//     try(Connection con = DB.sql2o.open()) {
-//       String sql = "SELECT * FROM sightings WHERE animalid = :id";
-//       return con.createQuery(sql)
-//         .addParameter("id", this.id)
-//         .executeAndFetch(Sighting.class);
-//     }
-//   }
-// // ??
+  public List<Sighting> getSightings() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM sightings WHERE animalid = :id";
+      return con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeAndFetch(Sighting.class);
+    }
+  }
 
 public void updateName(String name) {
   this.name = name;
